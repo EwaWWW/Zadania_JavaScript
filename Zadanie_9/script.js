@@ -63,19 +63,38 @@ $tableRow.on({
 
 
 /*B
-- przycisk do dodania użytkownika ma być odblokowany jeśli wiek age > 18 a firstName ma więcej niż 3 litery*/
+- nad tabela być formularz, który pobiera dane usera i puszuje go do tablicy users i od razu pokazuje na widoku.
 
+- formularz ma mieć select, z 5 miastami do wyboru (Twoja decyzja), pozostałe wartości pobrane z inputów textowych*/
+
+const $userName = $('#user_name');
+const $userLastName = $('#user_lastName');
+const $userAge = $('#user_age');
+const $addUserButton = $('#add_user_btn');
+const $userCity = $('#city_select');
+
+$addUserButton.on('click', function () {
+    users.push({
+        firstName: $userName.val(),
+        lastName: $userLastName.val(),
+        age: $userAge.val(),
+        city: $userCity.val(),
+        id: users.length +1
+    });
+    $table.html(getRowsWithUsers());
+});
+
+/*- przycisk do dodania użytkownika ma być odblokowany jeśli wiek age > 18 a firstName ma więcej niż 3 litery*/
 
 
 function addUser() {
-    const $minRequiredAge = 18;
-    const $minRequiredFirstNameLength = 4;
-    return $userAge.val() < $minRequiredAge ||
-        $userFirstName.val().length < $minRequiredFirstNameLength;
-}
+    const $minAge = 18;
+    const $minFirstNameLength = 3;
+    return $userAge.val() < $minAge ||
+           $userName.val().length < $minFirstNameLength;
+    }
 
-function validateRequrements() {
-    $submitButton.prop('disabled', requirementsToActivate)
-};
-
-$userAge.add($userFirstName).on('keyup', validateRequrements);
+    function validateRequrements() {
+        $addUserButton.prop('disabled', addUser())
+    }
+    $userAge.add($userName).on('keyup', validateRequrements);
